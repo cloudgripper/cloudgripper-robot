@@ -1,4 +1,5 @@
 desc: The CloudGripper Robot is a project that includes 3D CAD models and electronics schematics.
+partcad: ">=0.8.0"
 docs:
   name: CloudGripper Robot
   intro: |
@@ -12,7 +13,7 @@ docs:
     - Robot - Contains the .step and .stl CAD models for the robot frame's parts.
     - Gerber_PCB_controller.zip - Contains the Gerber files for electronic manufacturing.
 
-import:
+dependencies:
   pub:
     onlyInRoot: True
     type: git
