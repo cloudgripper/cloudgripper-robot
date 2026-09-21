@@ -1,0 +1,326 @@
+links:
+  # GRIP PLATFORM
+  - part: Arm/Arm_grip_base
+    name: base
+  - part: servo/shoulder-unidir
+    package: //pub/electromechanics/towerpro
+    name: shoulder
+    connect:
+      withInstance: outer-flush
+      withParams:
+        turnZ: 270
+      name: base
+      to: //pub/std/metric/m:m2.5-thru
+      toInstance: servo-screw
+  - part: servo/mg90s
+    package: //pub/electromechanics/towerpro
+    name: servo_rotate
+    connect:
+      with: //pub/std/metric/m:m2.5-threaded-hole-4
+      name: shoulder
+      toInstance: inner
+
+  # RIGHT
+  # Front
+  - part: Arm/Arm_grip_link2
+    name: grip_link_front_top_right
+    connect:
+      withInstance: side0-bottom
+      withParams:
+        turnZ: 112
+      name: base
+      to: //pub/std/metric/m:m2-thru-8
+      toInstance: front-right-top
+  - part: Arm/Arm_grip_link2
+    name: grip_link_front_bottom_right
+    connect:
+      withInstance: side0-top
+      withParams:
+        turnZ: 68
+      name: base
+      to: //pub/std/metric/m:m2-thru-8
+      toInstance: front-right-bottom
+  - part: fastener/socketheadcap-iso4762
+    package: //pub/std/metric/cqwarehouse
+    name: screw_front_right_inner
+    params:
+      size: M2-0.4
+      length: 20
+    connect:
+      name: grip_link_front_top_right
+      toInstance: side0-top
+  - part: fastener/socketheadcap-iso4762
+    package: //pub/std/metric/cqwarehouse
+    name: screw_front_right_outer
+    params:
+      size: M2-0.4
+      length: 20
+    connect:
+      name: grip_link_front_top_right
+      toInstance: side1-top
+
+  - part: Arm/Arm_grip_finger_right
+    name: grip_finger_right
+    connect:
+      withInstance: front-top
+      name: grip_link_front_top_right
+      toInstance: side1-bottom
+  # Back
+  - part: Arm/Arm_grip_link2
+    name: grip_link_back_right
+    connect:
+      withInstance: side1-bottom
+      withParams:
+        turnZ: 0
+      name: grip_finger_right
+      toInstance: back-top
+  # FXIME(clairbee): the below part is wrong
+  - part: Arm/Arm_linear_pinion_gear
+    name: linear_pinion_gear_right
+    connect:
+      withInstance: bottom
+      withParams:
+        turnZ: 90
+      name: grip_link_back_right
+      toInstance: side0-top
+  - part: fastener/socketheadcap-iso4762
+    package: //pub/std/metric/cqwarehouse
+    name: screw_back_right_outer
+    params:
+      size: M2-0.4
+      length: 16
+    connect:
+      name: grip_link_back_right
+      toInstance: side1-top
+
+  # LEFT
+  # Front
+  - part: Arm/Arm_grip_link2
+    name: grip_link_front_top_left
+    connect:
+      withInstance: side0-bottom
+      withParams:
+        turnZ: 248
+      name: base
+      to: //pub/std/metric/m:m2-thru-8
+      toInstance: front-left-top
+  - part: Arm/Arm_grip_link2
+    name: grip_link_front_bottom_left
+    connect:
+      withInstance: side0-top
+      withParams:
+        turnZ: 292
+      name: base
+      to: //pub/std/metric/m:m2-thru-8
+      toInstance: front-left-bottom
+  - part: Arm/Arm_grip_finger_left
+    name: grip_finger_left
+    connect:
+      withInstance: front-top
+      withParams:
+        turnZ: 180
+      name: grip_link_front_top_left
+      toInstance: side1-bottom
+  - part: fastener/socketheadcap-iso4762
+    package: //pub/std/metric/cqwarehouse
+    name: screw_front_left_inner
+    params:
+      size: M2-0.4
+      length: 20
+    connect:
+      name: grip_link_front_top_left
+      toInstance: side0-top
+  - part: fastener/socketheadcap-iso4762
+    package: //pub/std/metric/cqwarehouse
+    name: screw_front_left_outer
+    params:
+      size: M2-0.4
+      length: 20
+    connect:
+      name: grip_link_front_top_left
+      toInstance: side1-top
+
+  # Back
+  - part: Arm/Arm_grip_link2
+    name: grip_link_back_left
+    connect:
+      withInstance: side1-bottom
+      withParams:
+        turnZ: 180
+      name: grip_finger_left
+      toInstance: back-top
+  - part: Arm/Arm_linear_pinion_gear
+    name: linear_pinion_gear_left
+    connect:
+      withInstance: bottom
+      withParams:
+        turnZ: 90
+      name: grip_link_back_left
+      toInstance: side0-top
+  - part: fastener/socketheadcap-iso4762
+    package: //pub/std/metric/cqwarehouse
+    name: screw_back_left_outer
+    params:
+      size: M2-0.4
+      length: 16
+    connect:
+      name: grip_link_back_left
+      toInstance: side1-top
+
+  # GRIP SERVO
+  - part: servo/mg90s
+    package: //pub/electromechanics/towerpro
+    name: servo_grip
+    # Alternatively, we could connect to the base instead
+    # connect:
+    #   with: //pub/std/metric/m:m2.5-thru-2.5
+    #   withInstance: top-front
+    #   # withPort: top-front*
+    #   withParams:
+    #     turnZ: 90
+    #   name: base
+    #   to: //pub/std/metric/m:m2-thru
+    #   toInstance: servo-grip-top
+    connect:
+      with: //pub/std/metric/m:m2.5-threaded-hole-4
+      withParams:
+        turnZ: 112
+        moveZ: 2.9
+        moveX: -0.7
+      name: grip_link_back_right
+      toInstance: side0-bottom
+  - part: fastener/socketheadcap-iso4762
+    package: //pub/std/metric/cqwarehouse
+    name: screw_servo_grip_top
+    params:
+      size: M2-0.4
+      length: 10
+    connect:
+      name: base
+      to: //pub/std/metric/m:m2-thru
+      toInstance: servo-grip-top
+      toParams:
+        moveZ: 2.5
+  - part: fastener/socketheadcap-iso4762
+    package: //pub/std/metric/cqwarehouse
+    name: screw_servo_grip_bottom
+    params:
+      size: M2-0.4
+      length: 10
+    connect:
+      name: base
+      to: //pub/std/metric/m:m2-hole-6
+      toInstance: servo-grip-bottom
+      toParams:
+        moveZ: 2.5
+
+  # FIXME(clairbee): figure out whether the shoulder is wrong (too small) or why it doesn't fit
+  - part: Arm/Arm_rotation_base
+    name: rotation_base
+    connect:
+      with: //pub/std/metric/m:m2.5-thru
+      withInstance: bottom
+      withParams:
+        turnZ: 180
+      name: servo_rotate
+      to: //pub/std/metric/m:m2.5-thru-2.5
+      toInstance: bottom-front
+  # FIXME(clairbee): figure out whe the servo doesn't fit into the below part
+  - part: Arm/Arm_linear_gear
+    name: linear_gear
+    connect:
+      name: rotation_base
+      # TODO(clairbee): fix interface angles in Arm/Arm_linear_gear so that withParams, withInstance and toInstance could be dropped
+      withInstance: bottom-right
+      withParams:
+        turnZ: 90
+      toInstance: bottom-right
+  - part: fastener/socketheadcap-iso4762
+    package: //pub/std/metric/cqwarehouse
+    name: screw_linear_gear_bottom_right
+    params:
+      size: M2-0.4
+      length: 8
+    connect:
+      name: rotation_base
+      toInstance: bottom-right
+      toParams:
+        moveZ: 3
+  - part: fastener/socketheadcap-iso4762
+    package: //pub/std/metric/cqwarehouse
+    name: screw_linear_gear_bottom_left
+    params:
+      size: M2-0.4
+      length: 8
+    connect:
+      name: rotation_base
+      toInstance: bottom-left
+      toParams:
+        moveZ: 3
+  - part: fastener/socketheadcap-iso4762
+    package: //pub/std/metric/cqwarehouse
+    name: screw_linear_gear_top_right
+    params:
+      size: M2-0.4
+      length: 8
+    connect:
+      name: rotation_base
+      toInstance: top-right
+      toParams:
+        moveZ: 3
+  - part: fastener/socketheadcap-iso4762
+    package: //pub/std/metric/cqwarehouse
+    name: screw_linear_gear_top_left
+    params:
+      size: M2-0.4
+      length: 8
+    connect:
+      name: rotation_base
+      toInstance: top-left
+      toParams:
+        moveZ: 3
+  - part: Arm/Arm_holder
+    name: holder
+    connect:
+      name: linear_gear
+      with: sliding-arm-female
+      withParams:
+        moveZ: 15
+      # TODO(clairbee): the below "to" must not be neccessary
+      to: sliding-arm-male
+  - part: servo/mg90s
+    package: //pub/electromechanics/towerpro
+    name: servo_linear
+    connect:
+      with: //pub/std/metric/m:m2.5-thru-2.5
+      withInstance: bottom-front
+      withParams:
+        turnZ: 180
+        moveX: 0.7
+      name: holder
+      to: //pub/std/metric/m:m2-thru-9
+      toInstance: servo-bottom
+  - part: fastener/socketheadcap-iso4762
+    package: //pub/std/metric/cqwarehouse
+    name: screw_servo_linear_top
+    params:
+      size: M2-0.4
+      length: 12
+    connect:
+      name: holder
+      to: //pub/std/metric/m:m2-thru-9
+      toInstance: servo-top
+      toParams:
+        moveZ: 2.5
+  - part: fastener/socketheadcap-iso4762
+    package: //pub/std/metric/cqwarehouse
+    name: screw_servo_linear_bottom
+    params:
+      size: M2-0.4
+      length: 12
+    connect:
+      name: holder
+      to: //pub/std/metric/m:m2-thru-9
+      toInstance: servo-bottom
+      toParams:
+        moveZ: 2.5

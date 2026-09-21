@@ -1,0 +1,131 @@
+desc: The CloudGripper Robot is a project that includes 3D CAD models and electronics schematics.
+partcad: ">=0.8.0"
+docs:
+  name: CloudGripper Robot
+  intro: |
+    It is designed to provide model filesand information on how to build the robot.
+    Documentation: [http://www.cloudgripper.org](http://www.cloudgripper.org)
+
+    Folder structure: The repository is structured as follows:
+    - Arm - Contains the .step and .stl CAD models for the robot arm.
+    - Drag_chain - Contains the .step and .stl CAD models for the robot's drag chain.
+    - Electronics_case - Contains the CAD model for the robot's electronics case.
+    - Robot - Contains the .step and .stl CAD models for the robot frame's parts.
+    - Gerber_PCB_controller.zip - Contains the Gerber files for electronic manufacturing.
+
+dependencies:
+  pub:
+    onlyInRoot: True
+    type: git
+    url: https://github.com/partcad/partcad-index.git
+
+interfaces:
+  sliding-arm-female:
+    desc: The hole in the arm holder
+    ports:
+      wide: [[0, 0, 0], [1, 0, 0], 0]
+    parameters:
+      moveZ:
+        min: 0
+        max: 60
+        default: 30
+  sliding-arm-male:
+    desc: The insert on the arm linear gear
+    ports:
+      wide: [[0, 0, 0], [1, 0, 0], 0]
+    mates:
+      - sliding-arm-female
+
+parts:
+  Arm/Arm_grip_base:
+    type: step
+    implements:
+      "//pub/std/metric/m:m2-thru-8":
+        front-right-top: [[36.07, 29.56, 20.675], [1, 0, 0], 180]
+        front-right-bottom: [[36.07, 29.56, 12.825], [1, 0, 0], 0]
+        front-left-top: [[30.82, 29.56, 20.675], [1, 0, 0], 180]
+        front-left-bottom: [[30.82, 29.56, 12.825], [1, 0, 0], 0]
+      "//pub/std/metric/m:m2.5-thru":
+        "servo-screw": [[33.45, 6.68, 19.25], [1, 0, 0], -90]
+      "//pub/std/metric/m:m2-thru":
+        servo-grip-top: [[48.6, 19.35, 6.35], [1, 0, 0], 0]
+      "//pub/std/metric/m:m2-hole-6":
+        servo-grip-bottom: [[19.75, 19.35, 6.35], [1, 0, 0], 0]
+  Arm/Arm_grip_finger_right:
+    type: step
+    implements:
+      "//pub/std/metric/m:m2-thru-8":
+        front-top: [[7.958, -29.618, 0.925], [1, 0, 0], 180]
+        front-bottom: [[7.958, -29.618, -6.925], [1, 0, 0], 0]
+        back-top: [[-3.042, -29.618, 0.925], [1, 0, 0], 180]
+        back-bottom: [[-3.042, -29.618, -6.925], [1, 0, 0], 0]
+  Arm/Arm_grip_finger_left:
+    type: step
+    implements:
+      "//pub/std/metric/m:m2-thru-8":
+        front-top: [[7.958, 29.618, 0.925], [1, 0, 0], 180]
+        front-bottom: [[7.958, 29.618, -6.925], [1, 0, 0], 0]
+        back-top: [[-3.042, 29.618, 0.925], [1, 0, 0], 180]
+        back-bottom: [[-3.042, 29.618, -6.925], [1, 0, 0], 0]
+  Arm/Arm_grip_link2:
+    type: step
+    implements:
+      "//pub/std/metric/m:m2-thru-5":
+        side0-top: [[-3.042, 29.618, 1.33], [1, 0, 0], 180]
+        side0-bottom: [[-3.042, 29.618, -3.67], [1, 0, 0], 0]
+        side1-top: [[12.458, 29.618, 1.33], [1, 0, 0], 180]
+        side1-bottom: [[12.458, 29.618, -3.67], [1, 0, 0], 0]
+  Arm/Arm_holder:
+    type: step
+    implements:
+      # sliding-arm-male: [[12.85, 19.85, 53.58], [-0.71, 0.71, 0], 180]
+      sliding-arm-female: [[2.25, 19.85, 10.26], [0, 0, 1], -90]
+      "//pub/std/metric/m:m2-thru-9":
+        servo-top: [[21.75, 2.33, 12.63], [0.58, -0.58, -0.58], 120]
+        servo-bottom: [[21.75, 2.33, 41.48], [0.58, -0.58, -0.58], 120]
+  Arm/Arm_linear_gear:
+    type: step
+    implements:
+      "//pub/std/metric/m:m2-thru-3":
+        top-right: [[-62.4, 2, 10.67], [1, 0, 0], 90]
+        top-left: [[-62.4, 22, 10.67], [1, 0, 0], -90]
+        bottom-right: [[-62.4, 2, -18.17], [1, 0, 0], 90]
+        bottom-left: [[-62.4, 22, -18.17], [1, 0, 0], -90]
+      sliding-arm-male: [[-92.24, 8, 6.08], [0, -1, 0], 270]
+  Arm/Arm_linear_pinion_gear:
+    type: step
+    implements:
+      "//pub/std/metric/m:m2-thru-6":
+        top: [[0, 0, 6], [1, 0, 0], 180]
+        bottom: [[0, 0, 1.5], [1, 0, 0], 0]
+  Arm/Arm_rotation_base:
+    type: step
+    implements:
+      "//pub/std/metric/m:m2-hole-4":
+        top-right: [[-62.4, 2, 10.67], [1, 0, 0], -90]
+        top-left: [[-62.4, 22, 10.67], [1, 0, 0], 90]
+        bottom-right: [[-62.4, 2, -18.17], [1, 0, 0], -90]
+        bottom-left: [[-62.4, 22, -18.17], [1, 0, 0], 90]
+      "//pub/std/metric/m:m2.5-thru":
+        top: [[-67.9, 13.24, 10.67], [-0.58, 0.58, -0.58], 120]
+        bottom: [[-67.9, 13.24, -18.17], [-0.58, 0.58, -0.58], 120]
+
+assemblies:
+  Arm:
+    type: assy
+    desc: The robot arm
+  # Drag_chain:
+  #   type: assy
+  #   desc: The robot's drag chain
+  # Electronics_case:
+  #   type: assy
+  #   desc: The robot's electronics case
+  # Robot:
+  #   type: assy
+  #   desc: The robot frame's parts
+
+render:
+  svg:
+  readme:
+    exclude:
+      - interfaces
